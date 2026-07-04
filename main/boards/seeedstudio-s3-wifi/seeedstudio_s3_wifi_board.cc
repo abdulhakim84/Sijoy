@@ -6,43 +6,23 @@
 #include "assets/lang_config.h"
 #include "led/single_led.h"
 
-#include "board_config.h"  // <- Very important, from the current directory
+#include "board_config.h"  // <- Sangat penting, mengambil konfigurasi dari direktori saat ini
 #include <wifi_station.h>
 
 #include <esp_log.h>
-#include <driver/i2c_master.h>
-#include <esp_lcd_panel_ops.h>
-#include <esp_lcd_panel_vendor.h>
-#ifdef SH1106
-#include <esp_lcd_panel_sh1106.h>
-#endif
 
 #define TAG "SeeedStudioS3WifiBoard"
 
-// This class specifically represents the XIAO ESP32-S3 motherboard.
+// Kelas ini merepresentasikan motherboard XIAO ESP32-S3.
 class SeeedStudioS3WifiBoard : public WifiBoard {
 private:
-   
-
     Button boot_button_;
     Button touch_button_;
     Button volume_up_button_;
     Button volume_down_button_;
 
     void InitButtons() {
-        // Boot 按钮：切换聊天 / 复位 WiFi
-        /*
-        boot_button_.OnClick([this]() {
-            auto& app = Application::GetInstance();
-            if (app.GetDeviceState() == kDeviceStateStarting &&
-                !WifiStation::IsConnected()) {
-                ResetWifiConfiguration();
-            }
-            app.ToggleChatState();
-        });
-        */
-
-        // touch_button_: Compatible with voice press-to-talk logic (currently, it's not required to connect to the hardware).
+        // Tombol Touch: Mengatur logika tekan-untuk-bicara (Press-to-talk)
         touch_button_.OnPressDown([this]() {
             Application::GetInstance().StartListening();
         });
@@ -92,9 +72,11 @@ public:
         return &audio_codec;
     }
 
-    
-    
+    // WAJIB ADA: Mengembalikan nullptr karena display di-handle oleh Adafruit di application.cc
+    virtual Display* GetDisplay() override {
+        return nullptr;
+    }
 };
 
-// Register this board for system use.
+// Daftarkan board ini agar bisa digunakan oleh sistem Xiaozhi
 DECLARE_BOARD(SeeedStudioS3WifiBoard);
