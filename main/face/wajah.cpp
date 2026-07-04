@@ -1,9 +1,13 @@
+#include <Arduino.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include "wajah.h"
 
 // Inisialisasi variabel emosi global
 Emotion currentEmotion = EMOT_BIASA;
 
-// Variabel fisik wajah (internal file ini saja agar tidak bentrok)
+// Variabel fisik wajah
 static float faceX = 0, faceY = 0;
 static float targetFaceX = 0, targetFaceY = 0;
 static float velX = 0, velY = 0;
