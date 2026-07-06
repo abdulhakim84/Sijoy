@@ -40,6 +40,7 @@ set(SOURCES "audio/audio_codec.cc"
             )
 
 set(INCLUDE_DIRS "." "face" "display" "display/lvgl_display" "display/lvgl_display/jpg" "audio" "protocols")
+REQUIRES arduino
 
 # Add board common files
 list(APPEND SOURCES
